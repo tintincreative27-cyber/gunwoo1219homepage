@@ -1,0 +1,312 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    /* Light (White) defaults */
+    --background: 0 0% 98%;
+    --foreground: 222 16% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 16% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 16% 12%;
+
+    /* Navy Blue Primary stays vibrant */
+    --primary: 240 100% 30%;
+    --primary-foreground: 210 20% 98%;
+
+    /* Subtle secondary for light backgrounds */
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 222 16% 18%;
+
+    --muted: 220 10% 96%;
+    --muted-foreground: 215 15% 50%;
+
+    /* Cyan/Electric Blue Accent */
+    --accent: 191 100% 50%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 40% 8%;
+
+    --border: 220 10% 90%;
+    --input: 220 10% 98%;
+    --ring: 191 100% 50%;
+
+    --radius: 0.5rem;
+
+    /* Custom StratLink Variables */
+    --glow-cyan: 191 100% 50%;
+    --glow-blue: 210 100% 60%;
+    --navy-deep: 240 100% 15%;
+    --charcoal: 220 8% 15%;
+    --steel: 220 10% 80%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 16% 12%;
+    --sidebar-primary: 191 100% 50%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 220 10% 96%;
+    --sidebar-accent-foreground: 222 16% 12%;
+    --sidebar-border: 220 10% 90%;
+    --sidebar-ring: 191 100% 50%;
+  }
+
+  /* Dark override (applied when .dark is present on <html> or <body>) */
+  .dark {
+    --background: 0 0% 10%;
+    --foreground: 210 20% 95%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 210 20% 95%;
+
+    /* Navy Blue Primary */
+    --primary: 240 100% 25%;
+    --primary-foreground: 210 20% 95%;
+
+    /* Darker secondary */
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 220 10% 20%;
+    --muted-foreground: 215 15% 60%;
+
+    /* Cyan/Electric Blue Accent */
+    --accent: 191 100% 50%;
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 18%;
+    --ring: 191 100% 50%;
+
+    --radius: 0.5rem;
+
+    /* Custom StratLink Variables */
+    --glow-cyan: 191 100% 50%;
+    --glow-blue: 210 100% 60%;
+    --navy-deep: 240 100% 15%;
+    --charcoal: 0 0% 12%;
+    --steel: 220 10% 25%;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 191 100% 50%;
+    --sidebar-primary-foreground: 0 0% 5%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 191 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Arc Reactor Button Glow Effect */
+  .arc-reactor-glow {
+    box-shadow: 
+      0 0 10px hsl(var(--accent) / 0.5),
+      0 0 20px hsl(var(--accent) / 0.3),
+      0 0 40px hsl(var(--accent) / 0.2),
+      inset 0 0 15px hsl(var(--accent) / 0.1);
+  }
+
+  .arc-reactor-pulse {
+    animation: arcPulse 2s ease-in-out infinite;
+  }
+
+  .arc-reactor-ring {
+    background: linear-gradient(
+      135deg,
+      hsl(220 10% 20%) 0%,
+      hsl(220 10% 12%) 50%,
+      hsl(220 10% 8%) 100%
+    );
+    border: 2px solid hsl(220 10% 30%);
+  }
+
+  /* Tactical Grid Background */
+  .tactical-grid {
+    background-image: 
+      linear-gradient(hsl(var(--accent) / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--accent) / 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Scan Line Effect */
+  .scan-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--accent) / 0.5),
+      transparent
+    );
+    animation: scanLine 3s linear infinite;
+  }
+
+  /* Trust Badge Glow */
+  .trust-badge {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--secondary)) 0%,
+      hsl(var(--muted)) 100%
+    );
+    border: 1px solid hsl(var(--accent) / 0.3);
+  }
+
+  /* Card Hover Effect */
+  .defense-card {
+    transition: all 0.3s ease;
+    border: 1px solid hsl(var(--border));
+  }
+
+  .defense-card:hover {
+    border-color: hsl(var(--accent) / 0.5);
+    box-shadow: 
+      0 0 20px hsl(var(--accent) / 0.1),
+      0 10px 40px hsl(0 0% 0% / 0.3);
+    transform: translateY(-4px);
+  }
+
+  /* Category Badge */
+  .category-badge {
+    @apply px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded;
+    background: hsl(var(--accent) / 0.15);
+    color: hsl(var(--accent));
+    border: 1px solid hsl(var(--accent) / 0.3);
+  }
+
+  .category-badge-land {
+    background: hsl(120 50% 25% / 0.3);
+    color: hsl(120 60% 60%);
+    border-color: hsl(120 60% 40% / 0.5);
+  }
+
+  .category-badge-sea {
+    background: hsl(210 80% 30% / 0.3);
+    color: hsl(210 80% 70%);
+    border-color: hsl(210 80% 50% / 0.5);
+  }
+
+  .category-badge-air {
+    background: hsl(280 50% 30% / 0.3);
+    color: hsl(280 60% 70%);
+    border-color: hsl(280 50% 50% / 0.5);
+  }
+
+  /* Weekly Best 스크롤 스타일 - 가로 스크롤 */
+  .weekly-best-scroll {
+    -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
+    scrollbar-width: none; /* Firefox 스크롤바 숨기기 */
+    -ms-overflow-style: none; /* IE/Edge 스크롤바 숨기기 */
+    touch-action: pan-x; /* 가로 스크롤만 허용 */
+    scroll-snap-type: x mandatory; /* 스냅 스크롤 */
+  }
+
+  .weekly-best-scroll::-webkit-scrollbar {
+    display: none; /* Chrome/Safari 스크롤바 숨기기 */
+  }
+
+  /* 데스크톱에서는 스크롤 없이 한 줄로 표시 */
+  @media (min-width: 768px) {
+    .weekly-best-scroll {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+  }
+}
+
+@layer utilities {
+  /* Text Glow */
+  .text-glow {
+    text-shadow: 0 0 10px hsl(var(--accent) / 0.5);
+  }
+
+  /* Border Glow */
+  .border-glow {
+    box-shadow: 0 0 15px hsl(var(--accent) / 0.3);
+  }
+}
+
+@keyframes arcPulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 10px hsl(var(--accent) / 0.5),
+      0 0 20px hsl(var(--accent) / 0.3),
+      0 0 40px hsl(var(--accent) / 0.2),
+      inset 0 0 15px hsl(var(--accent) / 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 15px hsl(var(--accent) / 0.7),
+      0 0 30px hsl(var(--accent) / 0.5),
+      0 0 60px hsl(var(--accent) / 0.3),
+      inset 0 0 20px hsl(var(--accent) / 0.2);
+  }
+}
+
+@keyframes scanLine {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
