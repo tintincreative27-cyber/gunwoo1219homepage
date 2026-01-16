@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Shield, Menu, X, Sun, Moon, LogIn, LogOut, User } from "lucide-react";
+import { ShoppingCart, Shield, Menu, X, Sun, Moon, LogIn, LogOut, User, Globe } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage, Language } from "@/context/LanguageContext";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import AuthModal from "@/components/AuthModal";
@@ -15,11 +15,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Header: React.FC = () => {
   const { totalItems } = useCart();
-  const { user, signOut } = useAuth();
-  const { t } = useLanguage();
+  const { user, logout } = useAuth();
+  const { t, language, setLanguage, setChineseVariant } = useLanguage();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -55,6 +62,16 @@ const Header: React.FC = () => {
     { path: "/products", label: t("products") },
     { path: "/cart", label: t("cart") },
   ];
+
+  const handleLanguageChange = (lang: string) => {
+    const selected = lang as Language;
+    setLanguage(selected);
+    if (selected === "zh-CN") {
+      setChineseVariant("simplified");
+    } else if (selected === "zh-TW") {
+      setChineseVariant("traditional");
+    }
+  };
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -97,7 +114,30 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Cart & Mobile Menu */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 md:gap-4">
+            {/* Language Selector */}
+            <div className="hidden md:block">
+              <Select value={language} onValueChange={handleLanguageChange}>
+                <SelectTrigger className="w-[140px]">
+                  <div className="flex items-center gap-2">
+                    <Globe className="w-4 h-4" />
+                    <SelectValue placeholder="Language" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="ko">한국어</SelectItem>
+                  <SelectItem value="zh-CN">简体中文</SelectItem>
+                  <SelectItem value="zh-TW">繁體中文</SelectItem>
+                  <SelectItem value="ja">日本語</SelectItem>
+                  <SelectItem value="de">Deutsch</SelectItem>
+                  <SelectItem value="fr">Français</SelectItem>
+                  <SelectItem value="es">Español</SelectItem>
+                  <SelectItem value="ru">Русский</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
             {/* Login/User Button */}
             {user ? (
               <DropdownMenu>
@@ -122,7 +162,7 @@ const Header: React.FC = () => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={signOut} className="text-red-500 focus:text-red-600">
+                  <DropdownMenuItem onClick={logout} className="text-red-500 focus:text-red-600">
                     <LogOut className="w-4 h-4 mr-2" />
                     {t("logout")}
                   </DropdownMenuItem>
@@ -202,6 +242,27 @@ const Header: React.FC = () => {
                   {link.label}
                 </Link>
               ))}
+              <div className="px-4 pt-2">
+                <Select value={language} onValueChange={handleLanguageChange}>
+                  <SelectTrigger className="w-full">
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4" />
+                      <SelectValue placeholder="Language" />
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="ko">한국어</SelectItem>
+                    <SelectItem value="zh-CN">简体中文</SelectItem>
+                    <SelectItem value="zh-TW">繁體中文</SelectItem>
+                    <SelectItem value="ja">日本語</SelectItem>
+                    <SelectItem value="de">Deutsch</SelectItem>
+                    <SelectItem value="fr">Français</SelectItem>
+                    <SelectItem value="es">Español</SelectItem>
+                    <SelectItem value="ru">Русский</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               {user ? (
                 <>
                   <Link
@@ -218,7 +279,7 @@ const Header: React.FC = () => {
                   <button
                     onClick={() => {
                       setMobileMenuOpen(false);
-                      signOut();
+                      logout();
                     }}
                     className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium uppercase tracking-wider transition-colors text-red-500 hover:bg-secondary"
                   >

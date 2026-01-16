@@ -12,10 +12,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+type SortOption = "latest" | "price-low" | "price-high";
+
 const ProductGrid: React.FC = () => {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | "All">("All");
-  const [sortOption, setSortOption] = useState<"latest" | "price-low" | "price-high">("latest");
+  const [sortOption, setSortOption] = useState<SortOption>("latest");
 
   const categories: { value: ProductCategory | "All"; label: string; icon: React.ReactNode }[] = [
     { value: "All", label: t("allSystems"), icon: null },

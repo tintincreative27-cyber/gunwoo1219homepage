@@ -6,7 +6,6 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const HeroSection: React.FC = () => {
   const { t } = useLanguage();
-  
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Tactical Grid Background */}
